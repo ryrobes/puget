@@ -1,10 +1,6 @@
 Puget
 =====
 
-[![Build Status](https://circleci.com/gh/greglook/puget.svg?style=shield&circle-token=cce98d9ba9811c55b454e22db02c338f81d6b093)](https://circleci.com/gh/greglook/puget)
-[![Coverage Status](https://codecov.io/gh/greglook/puget/branch/main/graph/badge.svg)](https://codecov.io/gh/greglook/puget/branch/main)
-[![cljdoc](https://cljdoc.org/badge/mvxcvi/puget)](https://cljdoc.org/d/mvxcvi/puget/CURRENT)
-
 Puget is a Clojure library for printing Clojure and
 [EDN](https://github.com/edn-format/edn) values. Under the hood, Puget formats
 data into _print documents_ and uses
@@ -23,7 +19,7 @@ handlers](#type-extensions).
 Puget releases are published on Clojars. To use the latest version with
 Leiningen, add the following dependency to your project definition:
 
-[![Clojars Project](http://clojars.org/mvxcvi/puget/latest-version.svg)](http://clojars.org/mvxcvi/puget)
+[![Clojars Project](https://img.shields.io/clojars/v/com.ryrobes/puget.svg?include_prereleases)](https://clojars.org/com.ryrobes/puget)
 
 See [Whidbey](https://github.com/greglook/whidbey) for nREPL and Leiningen integration.
 
@@ -59,6 +55,32 @@ Puget supports three different kinds of color markup:
 - `:ansi` (the default) adds ANSI color escapes for terminal outputs.
 - `:html-inline` adds HTML `span` elements with inline `style` attributes.
 - `:html-classes` adds `span` elements with semantic `class` attributes.
+
+ANSI color schemes can *also* use web hex colors and they will be converted into the closest 256 color terminal color. You can also use hex background ANSI colors via prefixing 'bg' to the hex color string.
+
+```clojure
+(puget/with-options ;; example with mixed color types
+      {:width 80
+      :color-scheme 
+   {;; syntax elements
+    :delimiter [:bold :red]
+    :tag       [:red]
+
+    ;; primitive values
+    :nil       [:bold "#f386bf"]
+    :boolean   [:green]
+    :number    [:cyan]
+    :string    [:blink :bold :cyan "bg#000000"] 
+    :character [:bold :magenta]
+    :keyword   [:bold "#dddd77"]
+    :symbol    nil
+
+    ;; special types
+    :function-symbol [:bold :blue]
+    :class-delimiter [:blue]
+    :class-name      [:bold :blue]}}}
+          (puget/cprint x))
+```          
 
 See the [`puget.color.ansi`](src/puget/color/ansi.clj) namespace for the
 available ANSI color styles which can be applied to syntax elements.

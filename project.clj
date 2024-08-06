@@ -1,6 +1,6 @@
-(defproject mvxcvi/puget "1.3.5-SNAPSHOT"
+(defproject com.ryrobes/puget "1.3.5-SNAPSHOT"
   :description "Colorizing canonical Clojure printer for EDN values."
-  :url "https://github.com/greglook/puget"
+  :url "https://github.com/ryrobes/puget"
   :license {:name "Public Domain"
             :url "http://unlicense.org/"}
 
